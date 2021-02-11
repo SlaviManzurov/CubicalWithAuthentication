@@ -1,21 +1,41 @@
 const router = require('express').Router();
 const authService = require('../services/authService')
 
-router.get('/login', (req,res) => {
+router.get('/login', (req, res) => {
     res.render('login')
 })
 
-router.get('/register', (req,res) => {
+router.get('/register', (req, res) => {
     res.render('register')
 })
 
-router.post('/register', async (req,res) => {
+router.post('/login', async (req,res) => {
+    const {username, password} = req.body
     try {
-        await authService.register(req.body)
-
-        res.redirect('/')
+        let token = await authService.login({username, password})
+        console.log(token);
+        res.end()
     } catch (error) {
-        res.render('register',{error})
+        console.log(error);
+        res.render('login', {error})
+    }
+})
+
+router.post('/register', async (req, res) => {
+    const {username, password, repeatPassword} = req.body
+
+    if (password !== repeatPassword) {
+        res.render('register', {message: 'Password missmatch'})
+        return
+    }
+
+    try {
+        let user = await authService.register({username, password})
+        
+        console.log(user);
+        res.redirect('/auth/login')
+    } catch (error) {
+        res.render('register', { error })
     }
 
 })
