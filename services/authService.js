@@ -2,11 +2,10 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const saltRound = 10;
-const secret =  'navuhodnosor'
+const secret = 'navuhodnosor'
 
 
 const register = async ({ username, password }) => {
-    console.log(saltRound)
     let salt = await bcrypt.genSalt(saltRound)
     let hash = await bcrypt.hash(password, salt)
 
@@ -19,9 +18,9 @@ const login = async ({ username, password }) => {
     if (!user) throw { message: 'User not found' }
 
     let isMatch = await bcrypt.compare(password, user.password)
-    if (!isMatch)  throw {message: 'password dos not mutch'}
+    if (!isMatch) throw { message: 'password dos not mutch' }
 
-    let token = jwt.sign({_id: user._id}, secret)
+    let token = jwt.sign({ _id: user._id, username: user.username }, secret)
     return token
 }
 
