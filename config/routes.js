@@ -9,7 +9,7 @@ const isGuest = require('../middlewares/isGuest')
 
 module.exports = (app) => {
     app.use('/', productController)
-    app.use('/auth', isGuest, authController)
+    app.use('/auth', authController)
     app.use('/about', aboutController)
     app.use('/accessories', accerssoryController)
     app.get('*',(req,res)=>{
