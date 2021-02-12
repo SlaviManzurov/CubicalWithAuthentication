@@ -22,7 +22,7 @@ router.post('/create', isAuthenticated, (req, res) => {
 
 
     productService.createProduct(req.body, req.user._id)
-    .then(()=> res.redirect('/'))
+        .then(() => res.redirect('/'))
     // let data = req.body;
     // productService.createProduct(data)
     // res.redirect('/')
@@ -48,18 +48,27 @@ router.post('/:productId/attach', isAuthenticated, (req, res) => {
 router.get('/:productId/edit', isAuthenticated, (req, res) => {
     productService.getOne(req.params.productId)
         .then(product => {
-            res.render('editCube',  product )
+            res.render('editCube', product)
         })
 })
 
-router.post('/:productId/edit', isAuthenticated, (req,res)=> {
+router.post('/:productId/edit', isAuthenticated, (req, res) => {
     productService.updateOne(req.params.productId, req.body)
-    .then(response => {
-        res.redirect(`/details/${req.params.productId}`)
-    })
-    .catch(err => {
+        .then(response => {
+            res.redirect(`/details/${req.params.productId}`)
+        })
+})
 
-    })
+router.get('/:productId/delete', isAuthenticated, (req, res) => {
+    productService.getOne(req.params.productId)
+        .then(product => {
+            res.render('deleteCube', product)
+        })
+})
+
+router.post('/:productId/delete', isAuthenticated, (req, res) => {
+    productService.deleteOne(req.params.productId)
+        .then(response => res.redirect('/'))
 })
 
 module.exports = router;

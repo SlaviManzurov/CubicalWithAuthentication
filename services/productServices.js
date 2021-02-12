@@ -45,6 +45,10 @@ function updateOne(productId, productData) {
     return Cube.updateOne({_id: productId}, productData)
 }
 
+function deleteOne(productId) {
+    return Cube.deleteOne({_id: productId})
+}
+
 module.exports = {
     getOne,
     getAll,
@@ -52,4 +56,5 @@ module.exports = {
     createProduct,
     attachAccessory,
     updateOne,
+    deleteOne,
 };
