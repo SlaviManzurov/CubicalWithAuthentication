@@ -20,9 +20,12 @@ router.get('/create', isAuthenticated, (req, res) => {
 
 router.post('/create', isAuthenticated, (req, res) => {
 
-    let data = req.body;
-    productService.createProduct(data)
-    res.redirect('/')
+
+    productService.createProduct(req.body, req.user._id)
+    .then(()=> res.redirect('/'))
+    // let data = req.body;
+    // productService.createProduct(data)
+    // res.redirect('/')
 })
 
 router.get('/details/:productId', async (req, res) => {

@@ -27,8 +27,8 @@ function getOneWithAccessories(id) {
     return Cube.findById(id).populate('accessories').lean()
 }
 
-function createProduct(data) {
-    let cube = new Cube(data)
+function createProduct(data, userId) {
+    let cube = new Cube({...data, creator: userId})
 
     return cube.save()
 }
