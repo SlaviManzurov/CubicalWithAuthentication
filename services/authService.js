@@ -20,7 +20,7 @@ const login = async ({ username, password }) => {
     let isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) throw { message: 'password dos not mutch' }
 
-    let token = jwt.sign({ _id: user._id, username: user.username }, secret)
+    let token = jwt.sign({ _id: user._id, roles: ['admin'] }, secret)
     return token
 }
 

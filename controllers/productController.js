@@ -42,4 +42,11 @@ router.post('/:productId/attach', isAuthenticated, (req, res) => {
         .then(() => res.redirect(`/details/${req.params.productId}`))
 })
 
+router.get('/:productId/edit', isAuthenticated, (req, res) => {
+    productService.getOne(req.params.productId)
+        .then(product => {
+            res.render('editCube',  product )
+        })
+})
+
 module.exports = router;
