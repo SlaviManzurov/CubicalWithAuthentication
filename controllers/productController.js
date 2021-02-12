@@ -49,4 +49,14 @@ router.get('/:productId/edit', isAuthenticated, (req, res) => {
         })
 })
 
+router.post('/:productId/edit', isAuthenticated, (req,res)=> {
+    productService.updateOne(req.params.productId, req.body)
+    .then(response => {
+        res.redirect(`/details/${req.params.productId}`)
+    })
+    .catch(err => {
+
+    })
+})
+
 module.exports = router;
